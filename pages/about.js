@@ -3,7 +3,7 @@ import Image from "next/image";
 import NavBar from "../components/NavBar";
 import styles from "../styles/Home.module.css";
 
-export default function Home() {
+export default function About() {
   return (
     <div className={styles.container}>
       <Head>
@@ -13,7 +13,19 @@ export default function Home() {
       </Head>
       <NavBar />
       <main className={styles.main}>
-        <div></div>
+        <div className="flex justify-center font-bold font-mono text-4xl">
+          {" "}
+          About{" "}
+        </div>
+        <div className="flex items-center font-bold font-mono text-4xl pl-20 pr-20 pt-10">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
+        </div>
       </main>
 
       <footer className={styles.footer}>
