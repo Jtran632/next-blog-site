@@ -10,8 +10,22 @@ export default function CreatePost() {
     handleSubmit,
   } = useForm();
   const onSubmit = async (data) => {
-    console.log(data);
+    // console.log(data)
+    await createPost(data)
   };
+  async function createPost(data) {
+    const response = await fetch("/api/post", {
+      method: "POST",
+      body: JSON.stringify(data),
+    })
+    let res = await response.json();
+    if (!response.ok) {
+      console.log(res.message)
+    }
+    else if (response.ok) {
+      console.log(res.message)
+    }
+  }
   return (
     <div className="bg-blue-200">
       <Head>
@@ -104,8 +118,4 @@ export default function CreatePost() {
   );
 }
 
-export async function getServerSideProps(context) {
-  return {
-    props: {}, // will be passed to the page component as props
-  };
-}
+
