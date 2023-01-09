@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export default async (req, res) => {
+  console.log(req.method);
   if (req.method === "POST") {
     const data = JSON.parse(req.body);
     console.log(data.imageUrl);
@@ -41,15 +42,5 @@ export default async (req, res) => {
       body: createPost,
       message: `Post created for ${checkUser.name}`,
     });
-  }
-  if (req.method === "GET") {
-    const data = JSON.parse(req.body);
-    console.log(data)
-    let checkUser = await prisma.User.findUnique({
-      where: {
-        id: data.authorId,
-      },
-    });
-    res.json({ body: checkUser, message: `User of post with title ${data.title} is ${checkUser.name}` });
   }
 };
