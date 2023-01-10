@@ -10,14 +10,18 @@ export default function title({ data, author }) {
     <div>
       <NavBar />
       <main className={styles.main}>
-        <div className="bg-blue-200 text-black h-screen">
+        <div className="bg-blue-200 text-black h-screen font-mono">
           <div className="flex place-content-center">
-            <img src={data.imageUrl} className="h-72" />
+            {data.imageUrl ? (
+              <img src={data.imageUrl} className="h-72" />
+            ) : (
+              <></>
+            )}
           </div>
-          <div className="flex items-center justify-center p-4">
-            Title - {data.title}, Post created by {author.name}
+          <div className="flex items-center justify-center p-4 text-lg">
+            {data.title}, Posted by {author.email} - {data.createdAt.substring(0, 10)}
           </div>
-          <div className="flex text-left p-20 justify-center ">
+          <div className="flex text-left p-6 pr-40 pl-40 justify-center ">
             {data.content}
           </div>
         </div>
@@ -29,7 +33,7 @@ export default function title({ data, author }) {
 
 export async function getServerSideProps(context) {
   // console.log(context.query.title)
-  console.log(context.query.slug);
+  //   console.log(context.query.slug);
   const posts = await prisma.post.findFirst({
     where: {
       id: Number(context.query.slug[0]),

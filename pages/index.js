@@ -1,7 +1,5 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
-import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
 import NavBar from "../components/NavBar";
 import styles from "../styles/Home.module.css";
@@ -9,19 +7,6 @@ import { PrismaClient } from "@prisma/client";
 import Footer from "../components/Footer";
 const prisma = new PrismaClient();
 export default function Home({ data }) {
-  async function getAuthor(props) {
-    const response = await fetch("/api/user", {
-      method: "POST",
-      body: JSON.stringify(props),
-    });
-    let res = await response.json();
-    if (!response.ok) {
-      console.log(res.message);
-    } else if (response.ok) {
-      console.log(res.message);
-      return <div>{res.name}</div>;
-    }
-  }
   
   return (
     <div className="bg-blue-200">
@@ -44,7 +29,7 @@ export default function Home({ data }) {
                     <div className="w-72 bg-blue-200 p-4">
                       <img src={i.imageUrl} />
                     </div>
-                    <div className="border-2 overflow-y-scroll w-96 p-2 break-words text-lg">
+                    <div className="border-2 overflow-y-hidden w-96 p-2 break-words text-lg">
                       {i.content}
                     </div>
                   </div>

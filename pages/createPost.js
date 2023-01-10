@@ -1,5 +1,3 @@
-import Head from "next/head";
-import Image from "next/image";
 import NavBar from "../components/NavBar";
 import styles from "../styles/Home.module.css";
 import { useForm } from "react-hook-form";
@@ -10,6 +8,7 @@ export default function CreatePost() {
     formState: { errors },
     handleSubmit,
   } = useForm();
+
   const onSubmit = async (data) => {
     // console.log(data)
     await createPost(data);
@@ -24,7 +23,7 @@ export default function CreatePost() {
       console.log(res.message);
     } else if (response.ok) {
       console.log(res.message);
-      console.log(res.name)
+      console.log(res.name);
     }
   }
   return (
@@ -40,46 +39,83 @@ export default function CreatePost() {
               Create Post
             </div>
             <ul className="grid grid-cols-12 grid-rows-6 ">
-              <li className="flex col-span-6 row-start-1 ">
+              <li className="flex col-span-6 row-start-1">
                 <input
                   {...register("name", {
-                    required: { value: true, message: "Name is required" },
+                    required: { value: true, message: "Name required" },
                     minLength: {
                       value: 2,
-                      message: "Name must be at least 2 characters long",
+                      message: "Min length 2",
+                    },
+                    maxLength: {
+                      value: 20,
+                      message: "Max length 20",
                     },
                   })}
-                  className="border m-4 w-full px-3 rounded-md p-1 bg-white"
+                  className="border m-4 w-9/12 px-3 rounded-md p-1 bg-white"
                   placeholder="Name"
                 />
-                {errors.name && <p>{errors.name.message}</p>}
+                {errors.name && (
+                  <span className="flex items-center text-sm  justify-center text-red-600">
+                    {errors.name.message}
+                  </span>
+                )}
               </li>
               <li className="flex col-span-6 row-start-1 items-center ">
                 <input
-                  {...register("email", { required: true })}
-                  className="border m-4 w-full px-3 rounded-md p-1 bg-white"
+                  {...register("email", {
+                    required: { value: true, message: "Email required" },
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: "Invalid email"
+                    }
+                  })}
+                  className="border m-4 w-9/12 px-3 rounded-md p-1 bg-white"
                   placeholder="Email"
                 />
+                {errors.email && (
+                  <span className="flex items-center text-sm  justify-center text-red-600">
+                    {errors.email.message}
+                  </span>
+                )}
               </li>
               <li className="flex col-span-6 row-start-2 items-center">
                 <input
-                  {...register("title", { required: true })}
-                  className="border m-4 w-full px-3 rounded-md p-1 bg-white"
+                  {...register("title", {
+                    required: { value: true, message: "Title required" },
+                    minLength: {
+                      value: 5,
+                      message: "Min characters 5",
+                    },
+                  })}
+                  className="border m-4 w-9/12 px-3 rounded-md p-1 bg-white"
                   placeholder="Title"
                 />
+                {errors.title && (
+                  <span className="flex items-center text-sm  justify-center text-red-600">
+                    {errors.title.message}
+                  </span>
+                )}
               </li>
               <li className="flex col-span-6 row-start-2 items-center">
                 <input
                   {...register("imageUrl", { required: false })}
-                  className="border m-4 w-full px-3 rounded-md p-1 bg-white"
+                  className="border m-4 w-9/12 px-3 rounded-md p-1 bg-white"
                   placeholder="Image URL"
                 />
               </li>
               <textarea
-                {...register("content", { required: true })}
+                {...register("content", {
+                  required: { value: true, message: "Content can't be empty" },
+                })}
                 className="px-3 col-start-1 col-end-13 row-start-3 row-span-5 border-2 m-4 rounded-md bg-white"
               />
             </ul>
+            {errors.content && (
+              <span className="flex items-center text-sm text-center justify-center text-red-600">
+                {errors.content.message}
+              </span>
+            )}
             <div className="w-full flex place-content-center">
               <input
                 type="submit"
@@ -88,11 +124,6 @@ export default function CreatePost() {
             </div>
           </form>
         </div>
-        {errors.name?.type === "required" && (
-          <p role="alert" className="flex text-black justify-center">
-            name is required
-          </p>
-        )}
       </main>
 
       <Footer />
