@@ -35,7 +35,7 @@ export default function Home({ data }) {
                   <div className="text-xl">- {i.title} -</div>
                   <div className="flex items-center gap-5">
                     <div>{i.createdAt.substring(0, 10)}</div>
-                    <Link href="/post/[title]" as={`/post/${i.title}`}>{'[->]'}</Link>
+                    <Link href="/post/[...slug]" as={`/post/${i.id}/${i.title}`}>{'[->]'}</Link>
                   </div>
                 </div>
 
