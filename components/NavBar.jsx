@@ -1,9 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import Head from "next/head";
+import { useSession } from "next-auth/react";
 export default function NavBar() {
-  const items = ["Home", "Create Posts", "About"];
-  const links = ["/", "createPost", "about"];
+  const { data: session } = useSession();
+  let items = ["Home", "Create Posts", "About", "Login/Logout"];
+  if (session) {
+    items[3] = `${session.user.name}` 
+  }
+  const links = ["/", "createPost", "about", "auth"];
   return (
     <ul className=" flex justify-center text-2xl font-bold font-mono text-black bg-gradient-to-t from-blue-200 to to-blue-500">
       <Head>

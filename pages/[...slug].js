@@ -1,11 +1,10 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable import/no-anonymous-default-export */
-import { PrismaClient } from "@prisma/client";
-import Footer from "../../components/Footer";
-import NavBar from "../../components/NavBar";
-import styles from "../../styles/Home.module.css";
+import prisma from "../lib/prismadb";
+import Footer from "../components/Footer";
+import NavBar from "../components/NavBar";
+import styles from "../styles/Home.module.css";
 import { useState } from "react";
-const prisma = new PrismaClient();
 export default function Post({ data, author }) {
   const [postContent, setPostContent] = useState(data);
   const [edit, setEdit] = useState(false);

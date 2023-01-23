@@ -3,16 +3,20 @@
 import Link from "next/link";
 import NavBar from "../components/NavBar";
 import styles from "../styles/Home.module.css";
-import { PrismaClient } from "@prisma/client";
+import prisma from "../lib/prismadb.js";
 import Footer from "../components/Footer";
-const prisma = new PrismaClient();
+import { useSession } from "next-auth/react";
 export default function Home({ data }) {
-  
+  const { data: session } = useSession();
+  console.log(session);
   return (
     <div className="bg-blue-200">
       <NavBar />
       <main className={styles.main}>
         <ul className="grid mt-10 gap-10 font-mono text-black">
+          <div className="text-2xl flex justify-center">
+            {session ? `Signed in as ${session.user.name}` : "Not Signed In"}
+          </div>
           {data.map((i) => (
             <div key={i.id} className="flex justify-center h-96">
               <li className="border-8 bg-blue-400 border-double rounded-md grid justify-center grid-rows-5">
@@ -20,7 +24,9 @@ export default function Home({ data }) {
                   <div className="text-xl">- {i.title} -</div>
                   <div className="flex items-center gap-5">
                     <div>{i.createdAt.substring(0, 10)}</div>
-                    <Link href="/post/[...slug]" as={`/post/${i.id}/${i.title}`}>{'[->]'}</Link>
+                    <Link href="/[...slug]" as={`/${i.id}/${i.title}`}>
+                      {"[->]"}
+                    </Link>
                   </div>
                 </div>
 
